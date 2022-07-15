@@ -21,7 +21,7 @@ jobs:
         id: docker_meta
         uses: crazy-max/ghaction-docker-meta@v1
         with:
-          images: ghcr.io/unterkunft-ukraine/staging-v2
+          images: ghcr.io/vasavi269/staging-v2
           tag-sha: true
           tag-edge: false
           tag-latest: true
