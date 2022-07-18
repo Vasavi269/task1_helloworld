@@ -51,4 +51,4 @@ jobs:
           context: .
           push: true
           tags: ${{ steps.docker_meta.outputs.tags }}
-          file: ./Dockerfile
+          file: ./Dockerfile # hello world application
