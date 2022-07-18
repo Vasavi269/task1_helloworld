@@ -11,6 +11,7 @@ on:
 jobs:
 
   build:
+    name: Build
     runs-on: ubuntu-latest
 
     steps:
@@ -52,3 +53,28 @@ jobs:
           push: true
           tags: ${{ steps.docker_meta.outputs.tags }}
           file: ./Dockerfile # hello world application
+
+  deploy:
+    name: Deploy
+    needs: [build]
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Set context from Kubeconfig
+      uses: azure/k8s-set-context@v1
+      with:
+        method: kubeconfig
+        kubeconfig: ${{secrets.KUBECONFIG}}
+        context: quickstart-hcloud-custom
+      id: setcontext
+
+    - name: Deploy to Kubernetes
+      uses: Azure/k8s-deploy@v1
+      with:
+        manifests: |
+          deploy.yaml
+        images: |
+          ghcr.io/vasavi269/staging-v2:${{ steps.docker_meta.outputs.tags }}

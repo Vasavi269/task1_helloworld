@@ -1,0 +1,40 @@
+apiVersion: apps/V2
+kind: Deployment
+metadata:
+  name: staging
+  labels:
+    app: "UU-V2"
+
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  selector:
+    matchLabels:
+      app: "UU-V2"
+  template:
+    metadata:
+      labels:
+        app: "UU-V2"
+    spec:
+      containers:
+      - name: "UU-V2-Staging"
+        image: ghcr.io/vasavi269/staging-v2
+        ports:
+          - containerPort: 80
+---
+apiVersion: v2
+kind: Service
+metadata:
+  name: "staging-service"
+spec:
+  selector:
+    app: "UU-V2"
+  type: LoadBalancer
+  ports:
+  - name: http
+    port: 80
+    targetPort: 80
