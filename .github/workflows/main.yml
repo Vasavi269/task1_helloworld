@@ -77,4 +77,4 @@ jobs:
         manifests: |
           deploy.yaml
         images: |
-          ghcr.io/vasavi269/staging-v2:latest
+          ghcr.io/vasavi269/staging-v2:sha-7edddd7
