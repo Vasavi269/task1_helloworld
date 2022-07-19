@@ -53,15 +53,6 @@ jobs:
           push: true
           tags: ${{ steps.docker_meta.outputs.tags }}
           file: ./Dockerfile # hello world application
-             
-      - name: List images
-        run: docker images  
-        
-      - name: Run a container
-        run: |
-          docker pull ${{ steps.docker_meta.outputs.tags }}
-          echo ${{ steps.docker_meta.outputs.tags }}
-          docker run --rm ${{ steps.docker_meta.outputs.tags }}
 
   deploy:
     name: Deploy
@@ -86,4 +77,4 @@ jobs:
         manifests: |
           deploy.yaml
         images: |
-          vasavi269/hello-world
+          ${{ steps.docker_meta.outputs.tags }}
