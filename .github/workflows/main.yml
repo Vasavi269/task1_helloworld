@@ -17,15 +17,42 @@ jobs:
     steps:
       - name: Check out
         uses: actions/checkout@v2
-      
-      - uses: mr-smithers-excellent/docker-build-push@v4
-        name: Build and push docker image
+
+      - name: Docker meta
+        id: docker_meta
+        uses: crazy-max/ghaction-docker-meta@v1
         with:
-          image: vasavi269/hello-world
+          images: ghcr.io/vasavi269/hello-world
+          tag-sha: true
+          tag-edge: false
+          tag-latest: true
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Login to GHCR
+        uses: docker/login-action@v1
+        with:
           registry: ghcr.io
-          dockerfile: Dockerfile
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GHCR_PASSWORD }}
+
+      - name: Build image
+        uses: docker/build-push-action@v2
+        with:
+          tags: latest
+          file: ./Dockerfile
+
+      - name: Push image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.docker_meta.outputs.tags }}
+          file: ./Dockerfile # hello world application
              
       - name: List images
         run: docker images  
@@ -33,7 +60,8 @@ jobs:
       - name: Run a container
         run: |
           # docker pull ghcr.io/vasavi269/hello-world
-          docker run --rm ghcr.io/vasavi269/hello-world
+          echo ${{ steps.docker_meta.outputs.tags }}
+          docker run --rm ghcr.io/vasavi269/hello-world:${{ steps.docker_meta.outputs.tags }}
 
   deploy:
     name: Deploy
