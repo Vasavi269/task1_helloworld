@@ -31,7 +31,9 @@ jobs:
         run: docker images  
         
       - name: Run a container
-        run: docker run --rm vasavi269/hello-world
+        run: |
+          docker pull ghcr.io/vasavi269/hello-world
+          docker run --rm vasavi269/hello-world
 
   deploy:
     name: Deploy
