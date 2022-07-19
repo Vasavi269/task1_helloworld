@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
       - name: "uu-v2-staging"
-        image: ghcr.io/vasavi269/hello-world:v0.1.0
+        image: ghcr.io/vasavi269/hello-world:latest
         ports:
           - containerPort: 80
 ---
