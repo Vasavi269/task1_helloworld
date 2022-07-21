@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
       - name: "uu-v2-staging"
-        image: __GITHUB_REPOSITORY__/__IMAGE_NAME__:__IMAGE_TAG__
+        image: __IMAGE__
         ports:
           - containerPort: 80
 ---
