@@ -1,9 +1,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: staging
+  name: hello-world
   labels:
-    app: "uu-v2"
+    app: "hello-world"
 
 spec:
   replicas: 2
@@ -14,17 +14,19 @@ spec:
       maxUnavailable: 1
   selector:
     matchLabels:
-      app: "uu-v2"
+      app: "hello-world"
   template:
     metadata:
       labels:
-        app: "uu-v2"
+        app: "hello-world"
     spec:
       containers:
-      - name: "uu-v2-staging"
-        image: __IMAGE__
+      - name: "hello-world"
+        image: ghcr.io/username/package:latest
         ports:
           - containerPort: 80
+      imagePullSecrets:
+        - name: github-container-registry
 ---
 apiVersion: v1
 kind: Service
