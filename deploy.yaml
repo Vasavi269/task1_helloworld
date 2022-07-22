@@ -22,21 +22,21 @@ spec:
     spec:
       containers:
       - name: "hello-world"
-        image: ghcr.io/username/package:latest
+        image: ghcr.io/vasavi269/hello-world:latest
         ports:
-          - containerPort: 8001
+          - containerPort: 5000
       imagePullSecrets:
         - name: github-container-registry
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: "staging-service"
+  name: "hello-service"
 spec:
   selector:
-    app: "uu-v2"
+    app: "hello-world"
   type: LoadBalancer
   ports:
   - name: http
-    port: 80
-    targetPort: 8001
+    port: 5000
+    targetPort: 5000

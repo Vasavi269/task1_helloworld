@@ -66,14 +66,15 @@ jobs:
     - name: Set kubernetes context
       uses: azure/k8s-set-context@v2
       with:
-        method: service-account
-        k8s-url: http://127.0.0.1:8001
-        k8s-secret: ${{ secrets.KUBERNETES_SECRET }}
+        method: kubeconfig
+        kubeconfig: ${{secrets.KUBECONFIG}}
+        context: quickstart-hcloud-custom
+      id: setcontext
 
     - name: Deploy to Kubernetes
       uses: Azure/k8s-deploy@v1
       with:
-        namespace: cd
+        namespace: default
         manifests: |
           deploy.yaml
         images: |
