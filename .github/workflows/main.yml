@@ -67,7 +67,7 @@ jobs:
       uses: azure/k8s-set-context@v2
       with:
         method: service-account
-        k8s-url: http://127.0.0.1:8001> 
+        k8s-url: http://127.0.0.1:8001
         k8s-secret: ${{ secrets.KUBERNETES_SECRET }}
 
     - name: Deploy to Kubernetes
