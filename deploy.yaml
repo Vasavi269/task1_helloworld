@@ -26,7 +26,7 @@ spec:
         ports:
           - containerPort: 5000
       imagePullSecrets:
-        - name: github-container-registry
+        - name: ghcr-vasavi
 ---
 apiVersion: v1
 kind: Service
