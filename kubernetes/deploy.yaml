@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
       - name: "hello-world"
-        image: ghcr.io/vasavi269/hello-world
+        image:  __REGISTRY__/__USER_NAME__/__IMAGE_NAME__:__IMAGE_TAG__
         ports:
           - containerPort: 5000
       imagePullSecrets:
