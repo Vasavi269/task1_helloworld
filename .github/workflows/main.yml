@@ -95,6 +95,6 @@ jobs:
       with:
         namespace: default
         manifests: |
-          deploy.yaml
+          kubernetes/deploy.yaml
         # images: |
         #   ${{ steps.docker_meta.outputs.tags }}
