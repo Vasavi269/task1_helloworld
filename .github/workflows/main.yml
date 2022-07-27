@@ -70,7 +70,7 @@ jobs:
           REGISTRY: ${{env.REGISTRY}}
           USER_NAME: ${{env.USER_NAME}}
           IMAGE_NAME: ${{env.IMAGE_NAME}}
-          IMAGE_TAG: ${{env.IMAGE_TAG}
+          IMAGE_TAG: ${{env.IMAGE_TAG}}
 
 
   deploy:
