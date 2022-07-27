@@ -60,7 +60,22 @@ jobs:
           tags: ${{env.REGISTRY}}/${{env.USER_NAME}}/${{env.IMAGE_NAME}}:${{env.IMAGE_TAG}}
           file: ./Dockerfile # hello world application
 
-      - name: updating image name with each push
+
+  deploy:
+    name: Deploy
+    needs: [build]
+    runs-on: ubuntu-latest
+    env:
+      REGISTRY: ghcr.io
+      USER_NAME: vasavi269 
+      IMAGE_NAME: uk-platform-frontend
+      IMAGE_TAG: ${{ github.run_number }}
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: updating image name with each push
         uses: cschleiden/replace-tokens@v1
         with:
           files: '["kubernetes/*.yaml"]'
@@ -72,30 +87,19 @@ jobs:
           IMAGE_NAME: ${{env.IMAGE_NAME}}
           IMAGE_TAG: ${{env.IMAGE_TAG}}
 
-      - name: Set kubernetes context
-        uses: azure/k8s-set-context@v2
-        with:
-          method: kubeconfig
-          kubeconfig: ${{secrets.KUBECONFIG}}
-          context: quickstart-hcloud-custom
-        id: setcontext
+    - name: Set kubernetes context
+      uses: azure/k8s-set-context@v2
+      with:
+        method: kubeconfig
+        kubeconfig: ${{secrets.KUBECONFIG}}
+        context: quickstart-hcloud-custom
+      id: setcontext
 
-      - name: Deploy to Kubernetes
-        uses: Azure/k8s-deploy@v1
-        with:
-          namespace: default
-          manifests: |
-            kubernetes/deploy.yaml
-          # images: |
-          #   ${{ steps.docker_meta.outputs.tags }}
-
-
-  # deploy:
-  #   name: Deploy
-  #   needs: [build]
-  #   runs-on: ubuntu-latest
-
-  #   steps:
-  #   - name: Checkout
-  #     uses: actions/checkout@v2
-
+    - name: Deploy to Kubernetes
+      uses: Azure/k8s-deploy@v1
+      with:
+        namespace: default
+        manifests: |
+          kubernetes/deploy.yaml
+        # images: |
+        #   ${{ steps.docker_meta.outputs.tags }}
