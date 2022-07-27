@@ -76,12 +76,12 @@ jobs:
       uses: actions/checkout@v2
 
     - name: updating image name with each push
-        uses: cschleiden/replace-tokens@v1
-        with:
+      uses: cschleiden/replace-tokens@v1
+      with:
           files: '["kubernetes/*.yaml"]'
           tokenPrefix: __
           tokensuffix: __
-        env:
+      env:
           REGISTRY: ${{env.REGISTRY}}
           USER_NAME: ${{env.USER_NAME}}
           IMAGE_NAME: ${{env.IMAGE_NAME}}
