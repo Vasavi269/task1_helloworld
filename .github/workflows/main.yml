@@ -78,4 +78,4 @@ jobs:
         manifests: |
           deploy.yaml
         images: |
-          ${{ steps.docker_meta.outputs.tags }}
+          ghcr.io/vasavi269/hello-world:sha-2412939
